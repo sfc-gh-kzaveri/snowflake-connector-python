@@ -9,7 +9,7 @@ import json
 import logging
 import os
 import time
-from datetime import datetime
+from datetime import date, datetime
 
 import mock
 import pytest
@@ -621,6 +621,36 @@ def test_executemany(conn, db_parameters):
         assert rec[0] == 5, "number of records"
         assert c.rowcount == 5, "wrong number of records were inserted"
         c.close()
+
+
+def test_executemany_qmark_types(conn, db_parameters):
+    table_name = "date_test"
+    with conn(paramstyle="qmark") as cnx:
+        cnx.cursor().execute(f"create table {table_name} (birth_date date)")
+
+        insert_qy = f"INSERT INTO {table_name} (birth_date) values (?)"
+        date_1, date_2 = date(1969, 2, 7), date(1969, 1, 1)
+
+        try:
+            # insert two dates, one in tuple format which specifies
+            # the snowflake type similar to how we support it in this
+            # example:
+            # https://docs.snowflake.com/en/user-guide/python-connector-example.html#using-qmark-or-numeric-binding-with-datetime-objects
+            c = cnx.cursor()
+            c.executemany(
+                insert_qy,
+                [[date_1], [("DATE", date_2)]],
+            )
+            c.close()
+
+            c = cnx.cursor()
+            c.execute(f"select * from {table_name}")
+            inserted_dates = [row[0] for row in c.fetchall()]
+            assert date_1 in inserted_dates
+            assert date_2 in inserted_dates
+            c.close()
+        finally:
+            cnx.cursor().execute(f"drop table if exists {table_name}")
 
 
 def test_closed_cursor(conn, db_parameters):
@@ -1239,9 +1269,7 @@ def test_describe(conn_cnx):
             assert len(cur.fetchall()) == 0
 
             # test insert
-            cur.execute(
-                f"create table {table_name} (aa int)"
-            )
+            cur.execute(f"create table {table_name} (aa int)")
             try:
                 description = cur.describe(
                     "insert into {name}(aa) values({value})".format(
@@ -1251,6 +1279,4 @@ def test_describe(conn_cnx):
                 assert description[0][0] == "number of rows inserted"
                 assert cur.rowcount is None
             finally:
-                cur.execute(
-                    f"drop table if exists {table_name}"
-                )
+                cur.execute(f"drop table if exists {table_name}")
