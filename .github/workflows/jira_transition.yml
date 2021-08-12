@@ -24,4 +24,4 @@ jobs:
         with:
           issue: SNOW-424496
           transition: 'MOVE TO IN PROGRESS'
-          fields: '{ "customfield_12860": {"id": "12360"} }'
+          fields: '{ "customfield_12860": {"id": "11505"} }'
