@@ -24,6 +24,7 @@ jobs:
           TITLE: "${{ github.event.issue.title }}"
         run: |
           jira=$(echo -n $TITLE | awk '{print $1}' | set -e 's/://')
+          echo $jira
           echo ::set-output name=jira::$jira
 
       - name: Close issue
@@ -39,4 +40,4 @@ jobs:
             "customfield_12400": {"id": "-1"},
             "resolution": {"name": "Done"}
           }'
-          updates: '{ "comment": [ { "add": { "body" : "Closed on GitHub" } } ] }'
+          update: '{ "comment": [ { "add": { "body" : "Closed on GitHub" } } ] }'
