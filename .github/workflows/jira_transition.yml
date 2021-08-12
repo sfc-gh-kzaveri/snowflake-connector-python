@@ -23,5 +23,5 @@ jobs:
         uses: kushanzaveri/gajira-transition@add-fields-support
         with:
           issue: SNOW-424496
-          transition: 'In Progress'
+          transition: 'MOVE TO IN PROGRESS'
           fields: '{ "customfield_12860": {"id": "12360", "value": "Yes"}}'
