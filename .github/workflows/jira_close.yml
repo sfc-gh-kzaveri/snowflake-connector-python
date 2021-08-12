@@ -24,21 +24,17 @@ jobs:
           TITLE: ${{ github.event.issue.title }}
         run: |
           jira=$(echo -n $TITLE | awk '{print $1}' | sed -e 's/://')
-          echo $jira
-          echo "KUSHAN"
           echo ::set-output name=jira::$jira
 
       - name: Close issue
         uses: kushanzaveri/gajira-transition@add-fields-support
-#        if: startsWith(steps.extract.outputs.jira, 'SNOW-')
+        if: startsWith(steps.extract.outputs.jira, 'SNOW-')
         with:
           issue: ${{ steps.extract.outputs.jira }}
           transition: 'MOVE TO DONE'
           fields: '{
             "customfield_12860": {"id": "11506"},
-            "customfield_10800": {"id": "-1"},
             "customfield_12500": {"id": "11302"},
-            "customfield_12400": {"id": "-1"},
             "resolution": {"name": "Done"}
           }'
           update: '{ "comment": [ { "add": { "body" : "Closed on GitHub" } } ] }'
