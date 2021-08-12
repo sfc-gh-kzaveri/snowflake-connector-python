@@ -39,4 +39,6 @@ jobs:
             "customfield_12400": {"id": "-1"},
             "resolution": {"id": "6"}
           }'
-          update: '{ "comment": [ { "add": { "body" : "Closed on GitHub" } } ] }'
+#          update: '{
+#            "comment":
+#            { "add": { "body" : "Closed on GitHub" } } ] }'
