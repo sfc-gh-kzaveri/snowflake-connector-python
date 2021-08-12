@@ -1,0 +1,27 @@
+name: Jira creation
+
+on:
+  issues:
+    types: [assigned]
+
+jobs:
+  transition-issue:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.pull_request.user.login != 'whitesource-for-github-com[bot]' }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Login
+        uses: atlassian/gajira-login@v2.0.0
+        env:
+          JIRA_BASE_URL: ${{ secrets.JIRA_BASE_URL }}
+          JIRA_USER_EMAIL: ${{ secrets.JIRA_USER_EMAIL }}
+          JIRA_API_TOKEN: ${{ secrets.KUSHAN_JIRA_API_TOKEN }}
+
+      - name: Transition issue
+        uses: kushanzaveri/gajira-transition@add-fields-support
+        with:
+          issue: SNOW-
+          transition: 'In Progress'
+          fields: '{ "customfield_12860": {"id": "12360", "value": "Yes"}}'
