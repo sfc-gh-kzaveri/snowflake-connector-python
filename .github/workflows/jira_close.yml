@@ -43,31 +43,21 @@ jobs:
             "comment": [
               {
                 "add": {
-                  "body" :
-                   {
-                      "version": 1,
-                         "type": "doc",
-                            "content": [
-                                 {
-                                        "type": "paragraph",
-                                               "content": [
-                                                        {
-                                                                   "type": "text",
-                                                                              "text": "Hello "
-                                                                                       },
-                                                                                              {
-                                                                                                         "type": "text",
-                                                                                                                    "text": "world",
-                                                                                                                               "marks": [
-                                                                                                                                            {
-                                                                                                                                                           "type": "strong"
-                                                                                                                                                                        }
-                                                                                                                                                                                 ]
-                                                                                                                                                                                        }
-                                                                                                                                                                                             ]
-                                                                                                                                                                                                }
-                                                                                                                                                                                                 ]
-                                                                                                                                                                                             }
+                  "body" : {
+                    "version": 1,
+                    "type": "doc",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "Closed on GitHub"
+                          }
+                        ]
+                      }
+                    ]
+                  }
                 }
               }
             ]
