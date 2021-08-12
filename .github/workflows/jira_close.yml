@@ -41,16 +41,18 @@ jobs:
           }'
           update: '{
             "comment": [
-              "add": {
-                "body" : {
-                  "type": "doc",
-                  "version": 1,
-                  "content": [
-                    {
-                      "type": "text",
-                      "text": "Closed on GitHub"
-                    }
-                  ]
+              {
+                "add": {
+                  "body" : {
+                    "type": "doc",
+                    "version": 1,
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Closed on GitHub"
+                      }
+                    ]
+                  }
                 }
               }
             ]
