@@ -21,11 +21,12 @@ jobs:
       - name: Extract issue from title
         id: extract
         env:
-          TITLE: "${{ github.event.issue.title }}"
+          TITLE: ${{ github.event.issue.title }}
         run: |
           jira=$(echo -n $TITLE | awk '{print $1}' | set -e 's/://')
           echo $jira
-          echo ::set-output name=jira::$jira
+          echo "KUSHAN"
+          echo '::set-output name=jira::$jira'
 
       - name: Close issue
         uses: kushanzaveri/gajira-transition@add-fields-support
